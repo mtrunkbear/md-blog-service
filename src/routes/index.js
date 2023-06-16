@@ -5,7 +5,7 @@ const userController = require("../controllers/user");
 const validateUserId = require("../middlewares/validateUserId");
 const  validateJWT  = require("../middlewares/validateJWT");
 
-router.post("/post", postController.createPost);
+router.post("/post",validateJWT,validateUserId, postController.createPost);
 router.get("/post", postController.getPosts);
 router.get("/post/:id", postController.getPost);
 router.get("/post/user/:id", postController.getPostsByUser);
