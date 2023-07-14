@@ -77,8 +77,8 @@ exports.updatePost = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const post = await Post.fetchById(req.params.id);
-    if (!task) {
-      res.status(404).json({ error: "Task not found" });
+    if (!post) {
+      res.status(404).json({ error: "Post not found" });
     } else {
       await post.delete();
       res.status(204).send();
