@@ -1,6 +1,5 @@
 const express = require("express");
 const passport = require("passport");
-
 const jwt = require("jsonwebtoken");
 
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
@@ -57,7 +56,7 @@ router.get(
   "/google/callback/",
   passport.authenticate("google", { session: false }),
   (req, res) => {
-    res.redirect(`http://localhost:5173/?token=${req.user}`);
+    res.redirect(`${process.env.APP_URL}/?token=${req.user}`);
   }
 );
 
