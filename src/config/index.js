@@ -13,6 +13,6 @@ module.exports = {
     clientID:
       "1130884802-l7qluhshcckfjpie85ehlbp0aj61qchj.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:4000/auth/google/callback/",
+    callbackURL: process.env.API_URL +"/auth/google/callback/",
   },
 };
