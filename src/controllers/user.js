@@ -27,11 +27,8 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const id = req.user.id || req.params.id;
-
   const { nickName, firstName, lastName, avatarUrl, description, occupation } =
     req.body;
-  console.log({ id: req.params.id, type: typeof req.params.id });
-
   try {
     const user = await User.fetchById({ id: id });
     const userUpdated = await user.update({

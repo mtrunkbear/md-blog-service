@@ -125,13 +125,12 @@ class User {
       const value = validProperties[key];
       if (value !== undefined) {
         updateExpressionParts.push(`${key} = :${key}`);
-        expressionAttributeValues[`:${key}`] = { S: value };
+        expressionAttributeValues[`:${key}`] = { S: value || this.value };
         this[key] = value;
       }
     }
 
     const updateExpression = `SET ${updateExpressionParts.join(", ")}`;
-    console.log({ id: this.id });
     const params = {
       TableName: "user",
       Key: {

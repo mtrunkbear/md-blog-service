@@ -19,7 +19,6 @@ class Post {
         userId: { S: this.userId },
       },
     };
-    console.log(params);
     await dynamodb.putItem(params).promise();
     return this;
   }

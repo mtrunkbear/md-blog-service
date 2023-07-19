@@ -12,14 +12,12 @@ const validateJWT = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ error: "Token doesn't provided" });
   }
-console.log({token})
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-    console.log({ decodedToken });
     req.user = decodedToken.user; // Guardar los datos del usuario en el objeto req
     next();
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
     return res.status(401).json({ error: "Invalid Token" });
   }
 };

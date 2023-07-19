@@ -18,7 +18,6 @@ app.use(cors());
 app.get("/profile", (req, res) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(" ")[1];
-    console.log({ token });
 
     if (!token) {
       res.status(401).json({ error: "Token no proporcionado" });
@@ -27,13 +26,11 @@ app.get("/profile", (req, res) => {
 
   // Verificamos el token JWT y obtenemos los datos del usuario
   try {
-    console.log({secret: process.env.SECRET_KEY})
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-    console.log({ decodedToken });
     const { user } = decodedToken;
     res.json(user);
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
     res.status(401, { error: "Token inválido" });
   }
 });
