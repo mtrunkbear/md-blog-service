@@ -11,8 +11,8 @@ module.exports = {
   },
   googleOAuth: {
     clientID:
-      "1130884802-l7qluhshcckfjpie85ehlbp0aj61qchj.apps.googleusercontent.com",
-    clientSecret: "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",
+      process.env.GOOGLE_CLIENT,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.API_URL +"/auth/google/callback/",
   },
 };
