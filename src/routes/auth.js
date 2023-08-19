@@ -17,9 +17,6 @@ passport.use(
   new GoogleStrategy(
     googleOAuthConfig,
     async (accessToken, refreshToken, profile, done) => {
-      // Aquí puedes hacer cualquier cosa con el perfil de Google
-      // Por ejemplo, podrías buscar el usuario en tu base de datos
-      // y crear un JWT para él
 
       const googleUser = {
         id: profile.id,
