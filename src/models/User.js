@@ -23,7 +23,6 @@ class User {
   }
 
   async save() {
-    console.log(this.nickName,this.id,this.email)
     const params = {
       TableName: "user",
       Item: {
