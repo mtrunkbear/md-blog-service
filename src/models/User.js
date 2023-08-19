@@ -126,7 +126,7 @@ class User {
       const value = validProperties[key];
       if (value !== undefined) {
         updateExpressionParts.push(`${key} = :${key}`);
-        expressionAttributeValues[`:${key}`] = { S: value || this.value };
+        expressionAttributeValues[`:${key}`] = { S: value || this.value|| "" };
         this[key] = value;
       }
     }
