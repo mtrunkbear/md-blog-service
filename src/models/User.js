@@ -21,33 +21,34 @@ class User {
     this.avatarUrl = avatarUrl;
     this.email = email;
   }
-
   async save() {
+    console.log(this.nickName, this.email, this.avatarUrl, this.firstName, {
+      lastName: this.lastName,
+    });
     const params = {
       TableName: "user",
       Item: {
         id: { S: this.id },
         nickName: { S: this.nickName },
         email: { S: this.email },
-        firstName: ({ S: this.firstName } = { S: "" }),
-        lastName: ({ S: this.lastName } = { S: "" }),
-        occupation: ({ S: this.occupation } = { S: "" }),
-        description: ({ S: this.description } = { S: "" }),
-        avatarUrl: ({ S: this.avatarUrl } = { S: "" }),
+        firstName: { S: this.firstName || "" },
+        lastName: { S: this.lastName || "" },
+        occupation: { S: this.occupation || "" },
+        description: { S: this.description || "" },
+        avatarUrl: { S: this.avatarUrl || "" },
       },
       ConditionExpression:
-        "attribute_exists(nickName) OR attribute_exists(email)",
+        "attribute_not_exists(nickName) AND attribute_not_exists(email)",
     };
 
     try {
       await dynamodb.putItem(params).promise();
       return this;
     } catch (error) {
-      console.error("Error in save user" + error);
       if (error.code === "ConditionalCheckFailedException") {
-        throw new Error("The nickname is already in use");
+        console.error("The nickname is already in use");
       } else {
-        throw error;
+        console.error("Error in save user" + error);
       }
     }
   }

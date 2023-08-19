@@ -11,7 +11,8 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  const id = req.user.id || req.params.id;
+  console.log(req.user?.id ,req.params?.id )
+  const id = req.user?.id || req.params?.id;
   try {
     const user = await User.fetchById({ id: id });
     if (!user) {
@@ -20,13 +21,13 @@ exports.getUser = async (req, res) => {
       res.status(200).json(user);
     }
   } catch (err) {
-    console.error(err);
+    console.error("Error in getUser: " + err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
 exports.updateUser = async (req, res) => {
-  const id = req.user.id || req.params.id;
+  const id = req.user?.id || req.params?.id;
   const { nickName, firstName, lastName, avatarUrl, description, occupation } =
     req.body;
   try {
@@ -41,7 +42,7 @@ exports.updateUser = async (req, res) => {
     });
     return res.status(200).json(userUpdated);
   } catch (err) {
-    console.error(err);
+    console.error("Error in Update User: "+ err);
     res.status(500).json({ error: "Internal server error" });
   }
 };

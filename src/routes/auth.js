@@ -17,26 +17,37 @@ passport.use(
   new GoogleStrategy(
     googleOAuthConfig,
     async (accessToken, refreshToken, profile, done) => {
-
       const googleUser = {
         id: profile.id,
         email: profile.emails[0].value,
+        avatarUrl: profile._json.picture,
+        lastName: profile._json.family_name,
+        firstName: profile._json.given_name,
       };
-      const { email, id } = googleUser;
-
-      const user = await User.fetchById({id});
-      if (!user) {
-        const newUser = new User({
-          nickName: email.slice(0, 6) + v4().slice(0, 5),
-          email,
-          id,
+      const { email, id, avatarUrl, lastName, firstName } = googleUser;
+      let user;
+      user = await User.fetchById({ id });
+      try {
+        if (!user) {
+          const newUser = new User({
+            nickName: email.slice(0, 6) + v4().slice(0, 5),
+            email,
+            id,
+            avatarUrl,
+            lastName,
+            firstName,
+          });
+          user = await newUser.save();
+        }
+        jwt.sign({ user }, secretKey, { expiresIn: "1h" }, (err, token) => {
+          done(null, token);
         });
-        await newUser.save();
+      } catch (err) {
+        console.error("Error in google login  " + err);
+        (req, res) => {
+          res.redirect(`${process.env.APP_URL}`);
+        };
       }
-
-      jwt.sign({ user }, secretKey, { expiresIn: "1h" }, (err, token) => {
-        done(null, token);
-      });
     }
   )
 );
