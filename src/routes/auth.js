@@ -27,7 +27,7 @@ passport.use(
       const user = await User.fetchById({id});
       if (!user) {
         const newUser = new User({
-          nickname: email.slice(0, 6) + v4().slice(0, 5),
+          nickName: email.slice(0, 6) + v4().slice(0, 5),
           email,
           id,
         });

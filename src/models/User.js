@@ -23,6 +23,7 @@ class User {
   }
 
   async save() {
+    console.log(this.nickName,this.id,this.email)
     const params = {
       TableName: "user",
       Item: {
@@ -30,7 +31,7 @@ class User {
         nickName: { S: this.nickName },
         email: { S: this.email },
         firstName: ({ S: this.firstName } = { S: "" }),
-        lastMame: ({ S: this.lastName } = { S: "" }),
+        lastName: ({ S: this.lastName } = { S: "" }),
         occupation: ({ S: this.occupation } = { S: "" }),
         description: ({ S: this.description } = { S: "" }),
         avatarUrl: ({ S: this.avatarUrl } = { S: "" }),
